@@ -6,12 +6,15 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 
+import com.thinkinfotech.fragments.ArticleDetailsFragment;
 import com.thinkinfotech.fragments.HeadlinesFragment;
+import com.thinkinfotech.models.Article;
 
 public class NewsActivity extends FragmentActivity implements HeadlinesFragment.OnHeadlineSelectedListener{
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-    private Fragment headLinesLisFragment ;
+    private Fragment headLinesFragment ;
+    private Fragment articeDetailsFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,13 +23,21 @@ public class NewsActivity extends FragmentActivity implements HeadlinesFragment.
         // setSupportActionBar(myToolbar);
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        headLinesLisFragment = new HeadlinesFragment();
-        fragmentTransaction.replace(R.id.container, headLinesLisFragment, "HeadlinesList");
+        headLinesFragment = new HeadlinesFragment();
+        fragmentTransaction.replace(R.id.container, headLinesFragment, "HeadlinesList");
         fragmentTransaction.commit();
     }
 
     @Override
-    public void onHeadlineSelected(int index) {
+    public void onHeadlineSelected(Article article) {
+        if(article != null) {
+            articeDetailsFragment = ArticleDetailsFragment.newInstance(article.getUrl());
+            fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.container, articeDetailsFragment, "ArticleDetailsView");
+            fragmentTransaction.addToBackStack("HeadlinesList");
+            fragmentTransaction.commit();
+
+        }
 
     }
 }

@@ -64,7 +64,7 @@ public class HeadlinesFragment extends Fragment {
             @Override
             public void onResponse(Call<Articles> call, Response<Articles> response) {
                 if(response.isSuccessful()){
-                   mAdapter.setArticles(response.body().getArticles());
+                    mAdapter.setArticles(response.body().getArticles());
                 }
             }
 
@@ -112,9 +112,9 @@ public class HeadlinesFragment extends Fragment {
     public interface OnHeadlineSelectedListener {
         /**
          * Called when a given headline is selected.
-         * @param index the index of the selected headline.
+         * @param article the article of the selected headline.
          */
-        public void onHeadlineSelected(int index);
+         void onHeadlineSelected(Article article);
     }
 
 }
